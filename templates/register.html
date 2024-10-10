@@ -1,0 +1,112 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--	<head>-->
+<!--		<meta charset="UTF-8">-->
+<!--		<title>註冊</title>-->
+<!--		<link rel="stylesheet" href="{{ url_for('static', filename='css/public.css') }}">-->
+<!--        <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">-->
+<!--	</head>-->
+<!--	<body>-->
+<!--		&lt;!&ndash;-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;reg&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+<!--		<div class="reg">-->
+<!--			<form action="register" method="post">-->
+<!--				<h1>用戶註冊</h1>-->
+<!--&lt;!&ndash;				<h1><a href="billboard.html"><img src="img/temp/logo.png"></a></h1>&ndash;&gt;-->
+<!--&lt;!&ndash;				<p>用户注册</p>&ndash;&gt;-->
+<!--				<p><input type="text" name="username" value="" placeholder="請輸入帳號"></p>-->
+<!--				<p><input type="password" name="password" value="" placeholder="請輸入密碼"></p>-->
+<!--				<p><input type="password" name="confirm_password" value="" placeholder="請確認密碼"></p>-->
+<!--&lt;!&ndash;				<p class="txtL txt"><input class="code" type="text" name="" value="" placeholder="验证码"><img src="img/temp/code.jpg"></p>&ndash;&gt;-->
+<!--				<p><input type="submit" name="" value="註冊"></p>-->
+<!--				<p class="txtL txt">完成此註冊，即表明您同意了我們的<a href="#">&lt;使用條款和隱私策略&gt;</a></p>-->
+<!--				<p class="txt"><a href="{{ url_for('login') }}"><span></span>已有帳號登錄</a></p>-->
+<!--&lt;!&ndash;				<a href="#" class="off"><img src="img/temp/off.png"></a>&ndash;&gt;-->
+<!--			</form>-->
+<!--		</div>-->
+<!--	</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Majestic Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/mdi/css/materialdesignicons.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/base/vendor.bundle.base.css') }}">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo">
+              </div>
+              <h4>New here?</h4>
+              <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
+              <form action="register" method="post" class="pt-3">
+                <div class="form-group">
+                  <input type="text" name="username" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Username">
+                </div>
+                <div class="form-group">
+                  <input type="password" name="password" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Password">
+                </div>
+<!--                <div class="form-group">-->
+<!--                  <select class="form-control form-control-lg" id="exampleFormControlSelect2">-->
+<!--                    <option>权限</option>-->
+<!--                    <option>普通成员</option>-->
+<!--                    <option>管理员</option>-->
+<!--                  </select>-->
+<!--                </div>-->
+                <div class="form-group">
+                  <input type="password" name="confirm_password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Confirm Password">
+                </div>
+                <div class="mb-4">
+                  <div class="form-check">
+                    <label class="form-check-label text-muted">
+                      <input type="checkbox" class="form-check-input">
+                      I agree to all Terms & Conditions
+                    </label>
+                  </div>
+                </div>
+                <div class="mt-3">
+					<p><input type="submit" name="" value="SIGN UP" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"></p>
+                </div>
+                <div class="text-center mt-4 font-weight-light">
+                  Already have an account? <a href="{{ url_for('login') }}" class="text-primary">Login</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{{ url_for('static', filename='vendors/base/vendor.bundle.base.js') }}"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="{{ url_for('static', filename='js/off-canvas.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/hoverable-collapse.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/template.js') }}"></script>
+  <!-- endinject -->
+</body>
+
+</html>

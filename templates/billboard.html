@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会议室安排看板</title>
+    <!-- 引入Bootstrap CSS -->
+    <link rel="stylesheet" href="static/vendor/bootstrap-5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #53bee8f4;
+            background-image: url('static/billboard_image/MeetingRoom.jpg'); /* 添加背景图片 */
+            background-size: cover;
+            /* background-position: center; */
+            background-repeat: no-repeat;
+        }
+    
+        .container-fluid {
+            padding: 20px;
+        }
+    
+        .top-right-button {
+            position: absolute;
+            margin-top: 40px;
+            top: 7px;
+            right: 40px;
+            padding: 3px 10px;
+            font-size: 16px;
+            background-color: rgba(142, 140, 150, 0.4); /* 蓝色背景 */
+            color: blueviolet; /* 白色文字 */
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    
+        /* 鼠标悬停效果 */
+        .top-right-button:hover {
+            background-color: #45a049;
+        }
+    
+        /* 表格美化 */
+        .table {
+            background-color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            color: #333;
+            border-collapse: collapse;
+            width: 100%;
+        }
+    
+        .table thead th {
+            background-color: #007bff;
+            color: white;
+            border-bottom: 2px solid #007bff;
+            padding: 8px;
+        }
+    
+        .table tbody tr:hover {
+            background-color: #e0e0e0;
+        }
+    
+        .table td, .table th {
+            padding: 8px;
+            border: none; /* 去掉表格线条 */
+        }
+    
+        /* 顶部标签栏 */
+        .nav-tabs {
+            margin-top: 90px; /* 下移标签栏 */
+            border-bottom: none; /* 去掉底部边框 */
+        }
+    
+        .nav-tabs .nav-link {
+            border: none; /* 去掉边框 */
+            border-bottom: 2px solid transparent; /* 底部边框透明 */
+        }
+    
+        .nav-tabs .nav-link.active {
+            border-bottom: 2px solid #007bff; /* 激活状态底部边框 */
+        }
+    
+        .main-content {
+            padding: 20px;
+            margin-top: 20px;
+        }
+    
+        h2 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('login') }}" class="top-right-button">预约 ➡️</a>
+
+    <div class="container-fluid">
+        <!-- 顶部图片
+        <img src="image/MeetingRoom5.jpeg" alt="Header Image" class="header-image"> -->
+
+        <!-- 会议室选择标签栏 -->
+        <ul class="nav nav-tabs mb-3" id="roomTabs"></ul>
+
+        <!-- 会议室使用情况表格 -->
+        <div class="main-content" id="mainContent">
+            <h2>当前选择：会议室A</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">日期</th>
+                        <th scope="col">时间段</th>
+                        <th scope="col">部门</th>
+                        <th scope="col">预约人</th>
+                        <th scope="col">联系方式</th>
+                        <th scope="col">参会人数</th>
+                        <th scope="col">事项</th>
+                    </tr>
+                </thead>
+                <tbody id="scheduleTableBody">
+                    <!-- 动态填充表格内容 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 引入Bootstrap JS -->
+    <script src="static/vendor/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 会议室数据
+        const rooms = [
+            {
+                name: 'River/EE',
+                schedule: [
+                    { data: '2024-9-24', time: '09:00 - 10:00', department: '销售部', applicant: '张三', 
+                        contact: '131202031319', number: 6, note: "None"
+                    },
+                    { data: '2024-9-24', time: '10:00 - 11:00', department: '市场部', applicant: '李四', 
+                        contact: '131202031322', number: 5, note: "None"
+                    },
+                    { data: '2024-9-24', time: '11:00 - 12:00', department: '研发部', applicant: '王五', 
+                        contact: '131202035555', number: 100, note: "None"
+                    }
+                ]
+            },
+            {
+                name: 'Flower/PM',
+                schedule: [
+                    { data: '2024-9-24', time: '09:00 - 10:00', department: '财务部', applicant: '赵六', 
+                        contact: '131202050506', number: 8, note: "None"
+                    },
+                    { data: '2024-9-24', time: '10:00 - 11:00', department: '行政部', applicant: '钱七', 
+                        contact: '131202099999', number: 6, note: "None"
+                    },
+                    { data: '2024-9-24', time: '11:00 - 12:00', department: '人事部', applicant: '孙八', 
+                        contact: '131202031888', number: 6, note: "None"
+                    }
+                ]
+            },
+            {
+                name: 'Moon/SA',
+                schedule: [
+                    { data: '2024-9-24', time: '09:00 - 10:00', department: '客服部', applicant: '周九', 
+                        contact: '131202031319', number: 6, note: "None"
+                    },
+                    { data: '2024-9-24', time: '10:00 - 11:00', department: '运营部', applicant: '吴十', 
+                        contact: '131202031319', number: 6, note: "None"
+                    },
+                    { data: '2024-9-24', time: '11:00 - 12:00', department: '产品部', applicant: '郑十一', 
+                        contact: '131202031319', number: 6, note: "None"
+                    }
+                ]
+            },
+            {
+                name: 'Spark',
+                schedule: [
+                    { data: '2024-9-24', time: '09:00 - 10:00', department: '技术部', applicant: '王十二', 
+                        contact: '131202031319', number: 6, note: "None"
+                    },
+                    { data: '2024-9-24', time: '10:00 - 11:00', department: '设计部', applicant: '冯十三', 
+                        contact: '131202031319', number: 6, note: "None"
+                    },
+                    { data: '2024-9-24', time: '11:00 - 12:00', department: '采购部', applicant: '陈十四', 
+                        contact: '131202031319', number: 6, note: "None"
+                    }
+                ]
+            }
+        ];
+
+        let currentRoomIndex = 0;
+
+        function generateRoomTabs() {
+            const roomTabs = document.getElementById('roomTabs');
+            roomTabs.innerHTML = '';
+            rooms.forEach(room => {
+                const li = document.createElement('li');
+                li.className = 'nav-item';
+                const a = document.createElement('a');
+                a.className = 'nav-link';
+                a.href = '#';
+                a.setAttribute('data-room', room.name);
+                a.textContent = room.name;
+                li.appendChild(a);
+                roomTabs.appendChild(li);
+            });
+        }
+
+        function showRoomSchedule(room) {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.querySelector('h2').textContent = `当前选择：${room.name}`;
+
+            const tableBody = document.getElementById('scheduleTableBody');
+            tableBody.innerHTML = room.schedule.map(s => `
+                <tr>
+                    <td>${s.data}</td>
+                    <td>${s.time}</td>
+                    <td>${s.department}</td>
+                    <td>${s.applicant}</td>
+                    <td>${s.contact}</td>
+                    <td>${s.number}</td>
+                    <td>${s.note}</td>
+                </tr>
+            `).join('');
+
+            // 更新标签页的激活状态
+            const tabs = document.querySelectorAll('#roomTabs .nav-link');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-room') === room.name) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        function switchRoom() {
+            const room = rooms[currentRoomIndex];
+            showRoomSchedule(room);
+            currentRoomIndex = (currentRoomIndex + 1) % rooms.length;
+        }
+
+        // 初始化
+        generateRoomTabs();
+        switchRoom();
+
+        // 监听会议室点击事件
+        document.querySelectorAll('#roomTabs .nav-link').forEach(navLink => {
+            navLink.addEventListener('click', () => {
+                const roomName = navLink.getAttribute('data-room');
+                const room = rooms.find(r => r.name === roomName);
+                showRoomSchedule(room);
+
+                // 在一分钟后继续循环
+                setTimeout(switchRoom, 60000);
+            });
+        });
+
+        // 每20秒切换一次
+        setInterval(switchRoom, 5000);
+    </script>
+</body>
+</html>
